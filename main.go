@@ -11,7 +11,7 @@ type Url struct {
     Links []string
 }
 
-func CheckServers(link string, c chan string) {
+func CheckWeb(link string, c chan string) {
 
 
         res, err := http.Get(link)
@@ -31,6 +31,19 @@ func CheckServers(link string, c chan string) {
         defer res.Body.Close()
 }
 
+//this function accepts IP's
+func CheckGeneric(target string, c chan string) {
+    // Intentamos la conexión TCP
+    conn, err := net.DialTimeout("tcp", target, 2*time.Second)
+    
+    if err != nil {
+        c <- fmt.Sprintf("%s❌ %s está inalcanzable%s", ColorRed, target, ColorReset)
+        return
+    }
+    defer conn.Close()
+
+    c <- fmt.Sprintf("%s✅ %s conexión exitosa!%s", ColorGreen, target, ColorReset)
+}
 
 func main() {
 
@@ -49,7 +62,8 @@ func main() {
 	}
 	c := make(chan string)
     for _, link := range urls.Links {
-		go CheckServers(link, c)
+		// CheckWeb(link, c)
+		go CheckGeneric(link, c(
 	}
 
 	for i := 0; i < len(urls.Links); i++ {
