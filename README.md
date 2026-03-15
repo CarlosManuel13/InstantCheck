@@ -23,3 +23,11 @@ go build -o instantcheck
 
 ## Pictures 📷
 <img width="630" height="539" alt="image" src="https://github.com/user-attachments/assets/1bd22a1c-5d02-4dd6-9a46-c847a7813bf0" />
+
+
+## Compilar 👌
+
+**Ejecutar en la terminal**
+```bash
+ GOOS=linux go build main.go instantcheck
+```
